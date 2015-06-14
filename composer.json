@@ -1,0 +1,12 @@
+{
+    "name": "snesi/mpwarfwk",
+     "description": "MPWAR Framework",
+     "license": "Apache-2.0",
+     "keywords": [],
+     "homepage": "https://github.com/Snesi/mpwarfwk",
+     "type": "project",
+     "require": { },
+     "php": ">=5.3.2" ,
+    "minimum-stability": "dev",
+     "autoload": { }
+}
