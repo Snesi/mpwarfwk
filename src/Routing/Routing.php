@@ -1,8 +1,8 @@
 <?php
 
-namespace MPWAR;
+namespace MPWAR\Routing;
 
-use MPWAR\Route;
+use MPWAR\Routing\Route;
 
 class Routing {
 

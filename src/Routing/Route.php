@@ -1,9 +1,6 @@
 <?php
-namespace MPWAR;
+namespace MPWAR\Routing;
 
-/**
- *
- */
 class Route
 {
     const GET = "GET";

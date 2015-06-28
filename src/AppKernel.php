@@ -2,9 +2,9 @@
 
 namespace MPWAR;
 
-use MPWAR\Request;
-use MPWAR\Response;
-use MPWAR\Routing;
+use MPWAR\Request\Request;
+use MPWAR\Response\Response;
+use MPWAR\Routing\Routing;
 
 class AppKernel {
 

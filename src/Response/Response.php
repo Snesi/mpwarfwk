@@ -1,5 +1,5 @@
 <?php
-namespace MPWAR;
+namespace MPWAR\Response;
 
 class Response {
 

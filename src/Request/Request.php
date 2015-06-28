@@ -1,5 +1,5 @@
 <?php
-namespace MPWAR;
+namespace MPWAR\Request;
 
 class Request {
 

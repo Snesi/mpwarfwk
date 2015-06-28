@@ -2,8 +2,8 @@
 
 namespace MPWAR;
 
-use MPWAR\Request;
-use MPWAR\Response;
+use MPWAR\Request\Request;
+use MPWAR\Response\Response;
 
 class IOManager {
 
