@@ -11,8 +11,7 @@ class IOManager {
 		return new Request();
 	}
 
-	public static function cacheHttpResponse(Response $response) {
-		// do something with frikin $response
+	public static function sendHttpResponse(Response $response, array $headers = null) {
+		$response->send();
 	}
-
 }
