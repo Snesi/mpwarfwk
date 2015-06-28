@@ -8,11 +8,13 @@ class Route
 {
     const GET = "GET";
     const POST = "POST";
-    const MINUTES = "minutes";
-    const SECONDS = "seconds";
-    const HOURS = "hours";
-    const MILLISECONDS = "milliseconds";
-    const DAYS = "days";
+    const MINUTES = 60000;
+    const SECONDS = 1000;
+    const HOURS = 3600000;
+    const MILLISECONDS = 1;
+    const DAYS = 86400000;
+
+    const DEFAULT_EXPIRATION = 500;
     
     private $url;
     private $method;
@@ -34,12 +36,19 @@ class Route
         return new Route($route, self::POST);
     }
     
+    private function isValidTimeUnit($time_unit) {
+        return $time_unit === self::DAYS ||
+               $time_unit === self::HOURS ||
+               $time_unit === self::MINUTES ||
+               $time_unit === self::SECONDS ||
+               $time_unit === self::MILLISECONDS;
+    }
+
     public function expireAfter($time, $time_unit = self::MILLISECONDS) {
-        if ($time_unit == self::MILLISECONDS) {
-            $this->expiration = $time;
-        } 
-        else {
-            $this->expiration = $time;
+        if($this->isValidTimeUnit($time_unit)) {
+            $this->expiration = $time * $time_unit;
+        } else {
+            $this->expiration = self::DEFAULT_EXPIRATION;
         }
         return $this;
     }
