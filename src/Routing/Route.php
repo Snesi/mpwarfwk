@@ -1,6 +1,8 @@
 <?php
 namespace MPWAR\Routing;
 
+use MPWAR\Utils\Url;
+
 class Route
 {
     const GET = "GET";
@@ -49,6 +51,11 @@ class Route
         }
         return $this;
     }
+
+    public function where($param, $pattern) {
+        $this->url->addPattern($param, $pattern);
+        return $this;
+    }
     
     public function execute($action) {
         list($action, $controller) = explode("@", $action);
@@ -63,10 +70,11 @@ class Route
         $this->responseType = $responseType;
         return $this;
     }
-    
+
     public function toArray() {
+        $url_regex = $this->url->convertToRegex();
         return [
-            $this->url => [
+            $url_regex => [
                 $this->method => [
                     'controller' => $this->controller, 
                     'action' => $this->action, 
@@ -76,7 +84,6 @@ class Route
             ]
         ];
     }
-    
     public function __get($property) {
         if (isset($this->$property)) {
             return $this->$property;
