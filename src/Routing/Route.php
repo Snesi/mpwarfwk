@@ -21,18 +21,26 @@ class Route
     private $action;
     private $controller;
     private $responseType;
+
+    public static $routes = [];
     
-    public function __construct($route, $method = self::GET) {
-        $this->url = $route;
+    public function __construct(Url $url, $method = self::GET) {
+        $this->url = $url;
         $this->method = $method;
     }
     
     public static function get($route) {
-        return new Route($route, self::GET);
+        $url = new Url($route);
+        $route = new Route($url, self::GET);
+        self::$routes[] = $route;
+        return $route;
     }
     
     public static function post($route) {
-        return new Route($route, self::POST);
+        $url = new Url($route);
+        $route = new Route($url, self::POST);
+        self::$routes[] = $route;
+        return $route;
     }
     
     private function isValidTimeUnit($time_unit) {
