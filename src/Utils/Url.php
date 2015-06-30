@@ -21,7 +21,7 @@ class Url {
 	}
 
 	private function convertSlashes($route) {
-        return str_replace("/", "\/", $route) . "/";
+        return "/^" . str_replace("/", "\/", $route) . "$/";
     }
 
     private function hasVariables($url, &$matches) {

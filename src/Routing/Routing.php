@@ -2,6 +2,7 @@
 namespace MPWAR\Routing;
 
 use MPWAR\Routing\Route;
+use MPWAR\Request\Request;
 
 class Routing
 {
@@ -15,16 +16,31 @@ class Routing
         }
     }
 
-    private function urlHasAction($url) {
-    	return isset($this->routes[$url]) && isset($this->routes[$url][$method]);
+    private function getMethodsForUrl($url, &$matches = null) {
+    	foreach ($this->routes as $url_regex => $methods) {
+    		if(preg_match_all($url_regex, $url, $matches)) {
+    			return $methods;
+    		}
+    	}
+    	return null;
+    }
+
+    private function methodExists($urlMethods, $method) {
+    	return isset($urlMethods[$method]);
     }
     
-    public function getAction($url, $method)
+    public function getActionData(Request $req)
     {
-        if ($this->urlHasAction($url)) {
-            $action = $this->routes[$url][$method];
+    	$urlMethods = $this->getMethodsForUrl($req->uri, $urlArgs);
+        if ($this->methodExists($urlMethods, $req->method)) {
+            $action = $urlMethods[$req->method];
+            if(count($urlArgs)>1) {
+            	return [$action, $urlArgs[1]];
+            } else {
+            	return [$action, null];
+            }
         } else {
-        	throw new Exception("URL not found", 1);
+        	throw new \Exception("URL not found", 1);
         }
     }
 }

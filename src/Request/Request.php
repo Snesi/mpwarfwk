@@ -6,6 +6,7 @@ class Request
 	const URI_OFFSET = 1;
 	const REQUEST_METHOD = "REQUEST_METHOD";
 	const REQUEST_URI = "REQUEST_URI";
+	const QUERY_START = "?";
     
     private $get;
     private $post;
@@ -19,7 +20,6 @@ class Request
     
     public function __construct() {
         $this->createParameters();
-        $this->processUri();
     }
     
     private function createParameters() {
@@ -29,11 +29,11 @@ class Request
         $this->cookies = new Parameters($_COOKIE);
         
         $this->method = $_SERVER[self::REQUEST_METHOD];
-        $this->uri = $_SERVER[self::REQUEST_URI];
+        $this->uri = $this->processUri($_SERVER[self::REQUEST_URI]);
     }
 
-    private function processUri() {
-    	$this->uri_components = array_slice(explode("/", $this->uri), self::URI_OFFSET);
+    private function processUri($request_uri) {
+    	return strtok($request_uri, self::QUERY_START);
     }
 
     public function __get($property) {
