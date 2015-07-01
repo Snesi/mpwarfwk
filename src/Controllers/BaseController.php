@@ -1,6 +1,9 @@
 <?php
 
-namespace MPWAR\Controller;
+namespace MPWAR\Controllers;
+
+use MPWAR\AppKernel;
+use MPWAR\Request\Request;
 
 class BaseController {
 
