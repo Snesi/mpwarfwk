@@ -8,11 +8,11 @@ use MPWAR\Request\Request;
 class BaseController {
 
 	protected $request;
-	protected $kernel;
+	protected $app;
 
 	public function __construct(Request $req, AppKernel $app) {
 		$this->request = $req;
-		$this->kernel = $app;
+		$this->app = $app;
 	}
 
 }

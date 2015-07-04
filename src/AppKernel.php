@@ -16,18 +16,17 @@ class AppKernel
     }
     
     public function handle(Request $req) {
-        $response = $this->executeAction($req);
+        $response = $this->routeToController($req);
         
         return new Response("");
     }
     
-    private function executeAction(Request $req) {
+    private function routeToController(Request $req) {
         list($action, $args) = $this->router->getActionData($req);
 
         $controller_class = "\\Controllers\\" . $action["controller"];
         $controller_action = $action["action"];
         
-        //$viewGenerator = new View($this->templateEngine, $this->cacheEngine, 5);
         $controller = new $controller_class($req, $this);
         return call_user_func_array([$controller, $controller_action], $args);
     }
