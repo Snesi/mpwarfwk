@@ -29,7 +29,6 @@ class AppKernel
         
         //$viewGenerator = new View($this->templateEngine, $this->cacheEngine, 5);
         $controller = new $controller_class($req, $this);
-        if(!isset($args)) $args = [];
         return call_user_func_array([$controller, $controller_action], $args);
     }
 }

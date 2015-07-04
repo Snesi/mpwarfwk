@@ -37,7 +37,7 @@ class Routing
             if(count($urlArgs)>1) {
             	return [$action, $urlArgs[1]];
             } else {
-            	return [$action, null];
+            	return [$action, []];
             }
         } else {
         	throw new \Exception("URL not found", 1);
