@@ -5,7 +5,7 @@ namespace MPWAR\Controllers;
 use MPWAR\AppKernel;
 use MPWAR\Request\Request;
 
-class BaseController {
+abstract class BaseController {
 
 	protected $request;
 	protected $app;
