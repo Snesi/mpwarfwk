@@ -24,26 +24,30 @@ class Route
 
     public static $routes = [];
     
-    public function __construct(Url $url, $method = self::GET) {
+    public function __construct(Url $url, $method = self::GET)
+    {
         $this->url = $url;
         $this->method = $method;
     }
     
-    public static function get($route) {
+    public static function get($route)
+    {
         $url = new Url($route);
         $route = new Route($url, self::GET);
         self::$routes[] = $route;
         return $route;
     }
     
-    public static function post($route) {
+    public static function post($route)
+    {
         $url = new Url($route);
         $route = new Route($url, self::POST);
         self::$routes[] = $route;
         return $route;
     }
     
-    private function isValidTimeUnit($time_unit) {
+    private function isValidTimeUnit($time_unit)
+    {
         return $time_unit === self::DAYS ||
                $time_unit === self::HOURS ||
                $time_unit === self::MINUTES ||
@@ -51,8 +55,9 @@ class Route
                $time_unit === self::MILLISECONDS;
     }
 
-    public function expireAfter($time, $time_unit = self::MILLISECONDS) {
-        if($this->isValidTimeUnit($time_unit)) {
+    public function expireAfter($time, $time_unit = self::MILLISECONDS)
+    {
+        if ($this->isValidTimeUnit($time_unit)) {
             $this->expiration = $time * $time_unit;
         } else {
             $this->expiration = self::DEFAULT_EXPIRATION;
@@ -60,12 +65,14 @@ class Route
         return $this;
     }
 
-    public function where($param, $pattern) {
+    public function where($param, $pattern)
+    {
         $this->url->addPattern($param, $pattern);
         return $this;
     }
     
-    public function execute($action) {
+    public function execute($action)
+    {
         list($action, $controller) = explode("@", $action);
         if (isset($action) && isset($controller)) {
             $this->action = $action;
@@ -74,31 +81,35 @@ class Route
         return $this;
     }
     
-    public function respondWith($responseType) {
+    public function respondWith($responseType)
+    {
         $this->responseType = $responseType;
         return $this;
     }
 
-    public function toArray() {
+    public function toArray()
+    {
         $url_regex = $this->url->convertToRegex();
         return [
             $url_regex => [
                 $this->method => [
-                    'controller' => $this->controller, 
-                    'action' => $this->action, 
-                    'response' => $this->responseType, 
+                    'controller' => $this->controller,
+                    'action' => $this->action,
+                    'response' => $this->responseType,
                     'expiration' => $this->expiration
                 ]
             ]
         ];
     }
-    public function __get($property) {
+    public function __get($property)
+    {
         if (isset($this->$property)) {
             return $this->$property;
         }
         return null;
     }
-    public function __set($property, $value) {
+    public function __set($property, $value)
+    {
         if (isset($this->$property)) {
             $this->$property = $value;
         }
