@@ -1,9 +1,7 @@
-<?php 
+<?php
 
 namespace MPWAR\Templating;
 
-class TemplatingException extends \Exception {
-
-	
-
+class TemplatingException extends \Exception
+{
 }

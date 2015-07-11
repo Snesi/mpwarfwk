@@ -1,9 +1,8 @@
-<?php 
+<?php
 
 namespace MPWAR\Templating;
 
-interface TemplateAdapter {
-
-	public function render($template, array $args);
-
+interface TemplateAdapter
+{
+    public function render($template, array $args);
 }
