@@ -14,6 +14,6 @@ class IOManager
 
     public static function sendHttpResponse(Response $response, array $headers = null)
     {
-        $response->send();
+        echo $response->send();
     }
 }
