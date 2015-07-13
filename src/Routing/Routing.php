@@ -3,11 +3,12 @@ namespace MPWAR\Routing;
 
 use MPWAR\Routing\Route;
 use MPWAR\Request\Request;
+use Exceptions;
 
 class Routing
 {
     private $routes;
-    
+
     public function __construct()
     {
         $this->routes = [];
@@ -30,7 +31,7 @@ class Routing
     {
         return isset($urlMethods[$method]);
     }
-    
+
     public function getActionData(Request $req)
     {
         $urlMethods = $this->getMethodsForUrl($req->uri, $urlArgs);
@@ -42,7 +43,7 @@ class Routing
                 return [$action, []];
             }
         } else {
-            throw new \Exception("URL not found", 1);
+            throw new UndefinedUrlException("URL not found", 1);
         }
     }
 }

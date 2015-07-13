@@ -52,7 +52,7 @@ class RelationalDB
     private function db()
     {
         if (!$this->isConfigured()) {
-            throw new Exception('database is not configure correctly');
+            throw new Exceptions\DBException('database is not configure correctly');
         }
         if (isset($this->pdo)) {
             return $this->pdo;
@@ -67,7 +67,7 @@ class RelationalDB
 
             return $this->pdo;
         } catch (\PDOException $e) {
-            throw new Exception("Couldn't connect to the database");
+            throw new Exceptions\DBException("Couldn't connect to the database");
         }
     }
     public function close()
@@ -81,6 +81,6 @@ class RelationalDB
         $sth = $pdo->prepare($sql);
         $sth->execute($data);
 
-        return $sth->fetchAll();    
+        return $sth->fetchAll();
     }
 }
