@@ -6,6 +6,7 @@ use MPWAR\Request\Request;
 use MPWAR\Response\Response;
 use MPWAR\Response\HttpResponse;
 use MPWAR\Routing\Routing;
+use MPWAR\Routing\Exceptions\UndefinedUrlException;
 use MPWAR\Templating\TemplateAdapter;
 use MPWAR\Response\View;
 
@@ -36,9 +37,9 @@ class AppKernel
             $controller_class = '\\Controllers\\'.$action['controller'];
             $controller_action = $action['action'];
             $controller = new $controller_class($req, $this);
-
-            return call_user_func_array([$controller, $controller_action], $args);
-        } catch (\Exception $error) {
+            $response = call_user_func_array([$controller, $controller_action], $args);
+            return $response;
+        } catch (UndefinedUrlException $error) {
             return View::make('errors/404.html', [], 404);
         }
     }
