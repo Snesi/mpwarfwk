@@ -33,6 +33,7 @@ class AppConfig
             return $this->config[$name];
         }
         $this->config[$name] = $arguments[0];
+        return $this;
     }
 
     public static function toArray() {
