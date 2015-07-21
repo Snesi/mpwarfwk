@@ -7,6 +7,8 @@ class Route
 {
     const GET = "GET";
     const POST = "POST";
+    const PUT = "PUT";
+    const DELETE = "DELETE";
     const MINUTES = 60000;
     const SECONDS = 1000;
     const HOURS = 3600000;
@@ -14,7 +16,7 @@ class Route
     const DAYS = 86400000;
 
     const DEFAULT_EXPIRATION = 500;
-    
+
     private $url;
     private $method;
     private $expiration;
@@ -23,13 +25,13 @@ class Route
     private $responseType;
 
     public static $routes = [];
-    
+
     public function __construct(Url $url, $method = self::GET)
     {
         $this->url = $url;
         $this->method = $method;
     }
-    
+
     public static function get($route)
     {
         $url = new Url($route);
@@ -37,7 +39,7 @@ class Route
         self::$routes[] = $route;
         return $route;
     }
-    
+
     public static function post($route)
     {
         $url = new Url($route);
@@ -45,7 +47,7 @@ class Route
         self::$routes[] = $route;
         return $route;
     }
-    
+
     private function isValidTimeUnit($time_unit)
     {
         return $time_unit === self::DAYS ||
@@ -70,7 +72,7 @@ class Route
         $this->url->addPattern($param, $pattern);
         return $this;
     }
-    
+
     public function execute($action)
     {
         list($action, $controller) = explode("@", $action);
@@ -80,7 +82,7 @@ class Route
         }
         return $this;
     }
-    
+
     public function respondWith($responseType)
     {
         $this->responseType = $responseType;
