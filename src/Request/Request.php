@@ -1,6 +1,8 @@
 <?php
 namespace MPWAR\Request;
 
+use \MPWAR\AppConfig;
+
 class Request
 {
     const URI_OFFSET = 1;
@@ -9,6 +11,7 @@ class Request
     const QUERY_START = "?";
     const HTTP_ACCEPT = "HTTP_ACCEPT";
     const JSON_CONTENT = "application/json";
+    const LANGUAGE = "HTTP_ACCEPT_LANGUAGE";
 
     private $get;
     private $post;
@@ -18,6 +21,7 @@ class Request
     private $session;
     private $method;
     private $uri_components;
+    private $locale;
 
 
     public function __construct()
@@ -31,6 +35,11 @@ class Request
         $this->post = new Parameters($_POST);
         $this->server = new Parameters($_SERVER);
         $this->cookies = new Parameters($_COOKIE);
+
+        $this->locale = explode("-", $_SERVER[self::LANGUAGE])[0];
+        if(!in_array($this->locale, AppConfig::locales())) {
+            $this->locale = AppConfig::defaultLocale();
+        }
 
         $this->method = $_SERVER[self::REQUEST_METHOD];
         $this->uri = $this->processUri($_SERVER[self::REQUEST_URI]);

@@ -13,10 +13,12 @@ use MPWAR\Response\View;
 class AppKernel
 {
     private $router;
+    private $strings;
 
-    public function __construct(Routing $router, TemplateAdapter $templateAdapter)
+    public function __construct(Routing $router, TemplateAdapter $templateAdapter, array $strings)
     {
         $this->router = $router;
+        $this->strings = $strings;
         View::setAdapter($templateAdapter);
     }
 
@@ -36,7 +38,7 @@ class AppKernel
             list($action, $args) = $this->router->getActionData($req);
             $controller_class = '\\Controllers\\'.$action['controller'];
             $controller_action = $action['action'];
-            $controller = new $controller_class($req, $this);
+            $controller = new $controller_class($req, $this, $this->strings[$action['controller']]);
             $response = call_user_func_array([$controller, $controller_action], $args);
             return $response;
         } catch (UndefinedUrlException $error) {
